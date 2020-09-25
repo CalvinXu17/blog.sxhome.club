@@ -2,13 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-09-25T05:24:52.911Z</updated>
+    <updated>2020-09-25T05:39:22.690Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
     <logo>https://blog.sxhome.club/images/avatar.png</logo>
     <icon>https://blog.sxhome.club/favicon.ico</icon>
     <rights>All rights reserved 2020, 林·楠Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Picture Test]]></title>
+        <id>https://blog.sxhome.club/post/picture-test/</id>
+        <link href="https://blog.sxhome.club/post/picture-test/">
+        </link>
+        <updated>2020-09-25T05:30:44.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://blog.sxhome.club/post-images/1601011972279.jpg" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[第一篇博客]]></title>
         <id>https://blog.sxhome.club/post/di-yi-pian-bo-ke/</id>
