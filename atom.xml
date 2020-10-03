@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-10-03T14:13:05.416Z</updated>
+    <updated>2020-10-03T16:27:12.029Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
@@ -10,17 +10,56 @@
     <icon>https://blog.sxhome.club/favicon.ico</icon>
     <rights>All rights reserved 2020, 林·楠Blog</rights>
     <entry>
-        <title type="html"><![CDATA[16位汇编：int $0x13 读磁盘中断]]></title>
+        <title type="html"><![CDATA[16位x86汇编：int $0x10 显示中断]]></title>
+        <id>https://blog.sxhome.club/post/16-wei-x86-hui-bian-int-dollar0x10/</id>
+        <link href="https://blog.sxhome.club/post/16-wei-x86-hui-bian-int-dollar0x10/">
+        </link>
+        <updated>2020-10-03T15:39:55.000Z</updated>
+        <content type="html"><![CDATA[<p><code>int $0x10</code>是BIOS显示功能的中断<br>
+<code>功能号ah=0x03:</code>读光标位置<code>(用于设置参数寄存器为当前光标位置)</code><br>
+参数：<code>bh = 页号</code><br>
+返回：<br>
+<code>ch:cl</code>=扫描开始线:扫描结束线<br>
+<code>dh:dl</code>=行号<code>(0x00 顶端)</code>:列号<code>(0x00 最左边)</code></p>
+<p><code>功能号ah=0x13:</code>显示字符串<br>
+参数：<br>
+<code>ah:al</code>=功能号:放置光标的方式及规定属性.0x01表示使用bl中的属性值,光标停在字符串结尾处<br>
+<code>es:bp</code>=此寄存器对指向要显示的字符串起始位置处<br>
+<code>cx</code>=显示的字符串字符数<br>
+<code>bh:bl</code>=显示页面号: 字符属性<br>
+<code>dh:dl</code>=行号:列号<br>
+<code>字符属性: (0x00白色, 0x0a绿色, 0x0b水蓝, 0x0c红色, 0x0d紫色, 0x0e黄色)</code></p>
+<pre><code class="language-c">print_nl:  # 打印换行
+	movw $0xe0d,%ax  # CR
+	int	$0x10
+	movb $0xa,%al  # LF
+	int $0x10
+	ret
+print:
+    movb $0x03,%ah
+	xorb	%bh,%bh
+	int	$0x10  # 读光标位置到各参数寄存器，这样后面就会接在光标后继续打印
+	movw $msg, %bp  # 字符地址
+	movw $0x10,%cx  # 字符数
+	movw $0x1301,%ax  # 0x13显示字符功能号 0x01使用bl属性值，光标停在结尾处
+	movw $0xc,%bx  # 0x00页面 0x0c属性(红色)
+	int $0x10
+	ret
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[16位x86汇编：int $0x13 读磁盘中断]]></title>
         <id>https://blog.sxhome.club/post/16-wei-hui-bian-int-0x13/</id>
         <link href="https://blog.sxhome.club/post/16-wei-hui-bian-int-0x13/">
         </link>
         <updated>2020-10-03T13:33:40.000Z</updated>
         <content type="html"><![CDATA[<p><code>int 0x13</code>是BIOS读磁盘中断<br>
 <code>参数：</code><br>
-<code>dx=dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
-<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)  <code>注意扇区号从1号开始</code><br>
+<code>dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
+<code>ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)  <code>注意扇区号从1号开始</code><br>
 <code>es:bx</code>=读至的内存地址<code>(如果出错则CF标志置位jnc指令可判断,ah中是出错码)</code><br>
-<code>ax=ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
+<code>ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
 <pre><code class="language-c">ok_load_setup:
     xorw %dx, %dx			# drive 0, head 0  (dx=磁头号:驱动器号)
     movw $0x02,%cx  	 # sector 2, track 0 (cx=柱面号:开始扇区)
@@ -32,7 +71,7 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[16位汇编：循环拷贝]]></title>
+        <title type="html"><![CDATA[16位x86汇编：循环拷贝]]></title>
         <id>https://blog.sxhome.club/post/16-wei-hui-bian-xun-huan-kao-bei/</id>
         <link href="https://blog.sxhome.club/post/16-wei-hui-bian-xun-huan-kao-bei/">
         </link>

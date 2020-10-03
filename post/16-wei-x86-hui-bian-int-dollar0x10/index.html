@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>16位x86汇编：int $0x13 读磁盘中断 | 林·楠Blog</title>
+<title>16位x86汇编：int $0x10 显示中断 | 林·楠Blog</title>
 
 
 
@@ -108,7 +108,7 @@
         <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
                 <h2 class="post-title">
-                    16位x86汇编：int $0x13 读磁盘中断
+                    16位x86汇编：int $0x10 显示中断
                 </h2>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
@@ -118,19 +118,36 @@
                 </div>
                 <div class="post-content">
 					
-					<p><code>int 0x13</code>是BIOS读磁盘中断<br>
-<code>参数：</code><br>
-<code>dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
-<code>ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)  <code>注意扇区号从1号开始</code><br>
-<code>es:bx</code>=读至的内存地址<code>(如果出错则CF标志置位jnc指令可判断,ah中是出错码)</code><br>
-<code>ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
-<pre><code class="language-c">ok_load_setup:
-    xorw %dx, %dx			# drive 0, head 0  (dx=磁头号:驱动器号)
-    movw $0x02,%cx  	 # sector 2, track 0 (cx=柱面号:开始扇区)
-    movw #0x0200,%bx   # (es:bx=内存地址=0x90200)
-    movw %ax,#0x0200+len	# 2号服务为读磁盘,
-    int $0x13			          # BIOS读磁盘中断
-    jnc ok_load_setup		# jnc表示cf置位则跳转，cf置位则读磁盘失败，重读
+					<p><code>int $0x10</code>是BIOS显示功能的中断<br>
+<code>功能号ah=0x03:</code>读光标位置<code>(用于设置参数寄存器为当前光标位置)</code><br>
+参数：<code>bh = 页号</code><br>
+返回：<br>
+<code>ch:cl</code>=扫描开始线:扫描结束线<br>
+<code>dh:dl</code>=行号<code>(0x00 顶端)</code>:列号<code>(0x00 最左边)</code></p>
+<p><code>功能号ah=0x13:</code>显示字符串<br>
+参数：<br>
+<code>ah:al</code>=功能号:放置光标的方式及规定属性.0x01表示使用bl中的属性值,光标停在字符串结尾处<br>
+<code>es:bp</code>=此寄存器对指向要显示的字符串起始位置处<br>
+<code>cx</code>=显示的字符串字符数<br>
+<code>bh:bl</code>=显示页面号: 字符属性<br>
+<code>dh:dl</code>=行号:列号<br>
+<code>字符属性: (0x00白色, 0x0a绿色, 0x0b水蓝, 0x0c红色, 0x0d紫色, 0x0e黄色)</code></p>
+<pre><code class="language-c">print_nl:  # 打印换行
+	movw $0xe0d,%ax  # CR
+	int	$0x10
+	movb $0xa,%al  # LF
+	int $0x10
+	ret
+print:
+    movb $0x03,%ah
+	xorb	%bh,%bh
+	int	$0x10  # 读光标位置到各参数寄存器，这样后面就会接在光标后继续打印
+	movw $msg, %bp  # 字符地址
+	movw $0x10,%cx  # 字符数
+	movw $0x1301,%ax  # 0x13显示字符功能号 0x01使用bl属性值，光标停在结尾处
+	movw $0xc,%bx  # 0x00页面 0x0c属性(红色)
+	int $0x10
+	ret
 </code></pre>
 
 					
@@ -142,8 +159,8 @@
         
             <div class="next-post">
                 <div class="next gt-c-content-color-first">下一篇</div>
-                <a href="https://blog.sxhome.club/post/16-wei-hui-bian-xun-huan-kao-bei/" class="post-title gt-a-link">
-                    16位x86汇编：循环拷贝
+                <a href="https://blog.sxhome.club/post/16-wei-hui-bian-int-0x13/" class="post-title gt-a-link">
+                    16位x86汇编：int $0x13 读磁盘中断
                 </a>
             </div>
         
