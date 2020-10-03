@@ -1,10 +1,10 @@
-<html lang="zh">
+<html>
 <head>
     <meta charset="utf-8"/>
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>关于 - 林·楠Blog</title>
+<title>16位汇编：循环拷贝 | 林·楠Blog</title>
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
@@ -105,15 +105,49 @@
 </nav>
 
     <div class="post-container">
-        <div class="post-detail">
+        <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
+                <h2 class="post-title">
+                    16位汇编：循环拷贝
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-10-03 ·
+                    </time>
+                    
+                </div>
                 <div class="post-content">
-                    <p>Calvin的博客站，github: https://github.com/CalvinXu17/blog.sxhome.club/</p>
+					
+					<pre><code class="language-c">movw $0x7c0,%ax
+movw %ax,%ds
+movw $0x9000,%ax
+movw %ax,%es
+movw $256,%cx  # 256字=512字节
+sub %si,%si
+sub %di,%di
+rep
+movsw
+ljmp $0x9000,$offset
+</code></pre>
+<p>从[ds:si]拷贝%cx字（1字=2字节）到[es:di]</p>
 
+					
+                    
                 </div>
             </article>
         </div>
-        <br>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://blog.sxhome.club/post/di-yi-pian-bo-ke/" class="post-title gt-a-link">
+                    第一篇博客
+                </a>
+            </div>
+        
+
+        
+
         
             
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
@@ -160,11 +194,11 @@
 </script>
 
             
+
             
         
 
         
-
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first"></div>

@@ -1,10 +1,10 @@
-<html lang="zh">
+<html>
 <head>
     <meta charset="utf-8"/>
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>关于 - 林·楠Blog</title>
+<title>16位汇编：int $0x13 读磁盘中断 | 林·楠Blog</title>
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
@@ -105,15 +105,51 @@
 </nav>
 
     <div class="post-container">
-        <div class="post-detail">
+        <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
+                <h2 class="post-title">
+                    16位汇编：int $0x13 读磁盘中断
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-10-03 ·
+                    </time>
+                    
+                </div>
                 <div class="post-content">
-                    <p>Calvin的博客站，github: https://github.com/CalvinXu17/blog.sxhome.club/</p>
+					
+					<p><code>int 0x13</code>是BIOS读磁盘中断<br>
+<code>参数：</code><br>
+<code>dx=dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
+<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)<br>
+<code>es:bx</code>=读至的内存地址<code>(如果出错则CF标志置位jnc指令可判断,ah中是出错码)</code><br>
+<code>ax=ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
+<pre><code class="language-c">ok_load_setup:
+    xorw %dx, %dx			# drive 0, head 0  (dx=磁头号:驱动器号)
+    movw $0x02,%cx  	 # sector 2, track 0 (cx=柱面号:开始扇区)
+    movw #0x0200,%bx   # (es:bx=内存地址=0x90200)
+    movw %ax,#0x0200+len	# 2号服务为读磁盘,
+    int $0x13			          # BIOS读磁盘中断
+    jnc ok_load_setup		# jnc表示cf置位则跳转，cf置位则读磁盘失败，重读
+</code></pre>
 
+					
+                    
                 </div>
             </article>
         </div>
-        <br>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://blog.sxhome.club/post/16-wei-hui-bian-xun-huan-kao-bei/" class="post-title gt-a-link">
+                    16位汇编：循环拷贝
+                </a>
+            </div>
+        
+
+        
+
         
             
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
@@ -160,11 +196,11 @@
 </script>
 
             
+
             
         
 
         
-
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first"></div>
