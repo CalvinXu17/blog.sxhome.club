@@ -8,7 +8,7 @@
 
 
 
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1601733260628">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1601734383638">
 
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -96,7 +96,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1601733260628" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1601734383638" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
@@ -121,7 +121,7 @@
 					<p><code>int 0x13</code>是BIOS读磁盘中断<br>
 <code>参数：</code><br>
 <code>dx=dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
-<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)<br>
+<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)  <code>注意扇区号从1号开始</code><br>
 <code>es:bx</code>=读至的内存地址<code>(如果出错则CF标志置位jnc指令可判断,ah中是出错码)</code><br>
 <code>ax=ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
 <pre><code class="language-c">ok_load_setup:

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-10-03T13:54:36.634Z</updated>
+    <updated>2020-10-03T14:13:05.416Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
@@ -18,7 +18,7 @@
         <content type="html"><![CDATA[<p><code>int 0x13</code>是BIOS读磁盘中断<br>
 <code>参数：</code><br>
 <code>dx=dh:dl</code>=磁头号:驱动器号<code>(硬盘则位7要置1)</code><br>
-<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)<br>
+<code>cx=ch:cl</code>=磁道(柱面号)的低8位:开始扇区(0-5)磁道号高2位(位6-7)  <code>注意扇区号从1号开始</code><br>
 <code>es:bx</code>=读至的内存地址<code>(如果出错则CF标志置位jnc指令可判断,ah中是出错码)</code><br>
 <code>ax=ah:al</code>=服务号 <code>(0x02号服务为读磁盘扇区到内存)</code>:扇区数</p>
 <pre><code class="language-c">ok_load_setup:
