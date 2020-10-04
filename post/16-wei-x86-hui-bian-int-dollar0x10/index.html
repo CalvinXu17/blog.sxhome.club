@@ -8,7 +8,7 @@
 
 
 
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1601742422135">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1601810815459">
 
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -96,7 +96,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1601742422135" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1601810815459" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
@@ -139,14 +139,17 @@
 	int $0x10
 	ret
 print:
-    movb $0x03,%ah
+	push %bp  # 保存bp
+	movw %sp,%bp # 平衡堆栈
+	movb $0x03,%ah
 	xorb	%bh,%bh
 	int	$0x10  # 读光标位置到各参数寄存器，这样后面就会接在光标后继续打印
-	movw $msg, %bp  # 字符地址
+	movw 4(%bp), %bp  # 第一个压栈的参数为字符的地址
 	movw $0x10,%cx  # 字符数
 	movw $0x1301,%ax  # 0x13显示字符功能号 0x01使用bl属性值，光标停在结尾处
 	movw $0xc,%bx  # 0x00页面 0x0c属性(红色)
 	int $0x10
+	pop %bp  # 恢复bp
 	ret
 </code></pre>
 
