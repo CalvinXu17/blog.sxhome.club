@@ -2,13 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-10-06T09:14:44.940Z</updated>
+    <updated>2020-10-10T14:47:46.818Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
     <logo>https://blog.sxhome.club/images/avatar.png</logo>
     <icon>https://blog.sxhome.club/favicon.ico</icon>
     <rights>All rights reserved 2020, 林·楠Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[内存布局与启动流程]]></title>
+        <id>https://blog.sxhome.club/post/nei-cun-bu-ju-yu-qi-dong-liu-cheng/</id>
+        <link href="https://blog.sxhome.club/post/nei-cun-bu-ju-yu-qi-dong-liu-cheng/">
+        </link>
+        <updated>2020-10-10T13:59:52.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://blog.sxhome.club/post-images/1602338506568.jpeg" alt="" loading="lazy"><br>
+如上图所示，一般除了<code>0xA00000</code>到<code>0xFFFFF</code>(640K到1M共384K)和<code>0xFFFE0000</code>到<code>0xFFFFFFF</code>(4G最后的64K)以外的内存都可用作系统内存。<code>[0x0, 0xA0000)</code>的<code>640K</code>内存用于存放内核代码和数据，<code>640K到1M即[0xA0000, 0x100000)</code>保留用作图中的作用。由于Linux除了引导代码外不使用BIOS功能，也不使用BIOS中断向量表，因此存放在0x0到0x500的BIOS数据会被Linux系统模块覆盖。<br>
+<img src="https://blog.sxhome.club/post-images/1602339098677.jpeg" alt="" loading="lazy"><br>
+如上图所示为Linux的引导扇区代码执行流程：<br>
+1、首先CPU在上电后会将<code>0号扇区</code>的512字节读到内存<code>0x7C00</code>开始的内存中，然后跳转到<code>0x7C00</code>执行引导代码（即<code>bootsect.S</code>）<br>
+2、<code>bootsect.S</code>会将自身重新拷贝至<code>0x90000</code>内存，然后跳到<code>0x90000</code>开始段中对应的位置继续执行。接着将1号扇区开始的<code>4个扇区</code>的代码（即<code>setup.S</code>）拷贝到<code>0x90200</code>处，将系统模块拷贝至<code>0x10000</code>内存处，然后跳到0x90200执行setup.S代码。<br>
+3、前面为什么要拷贝至<code>0x90000</code>呢？因为<code>Linux0.12</code>系统模块默认不超过512K，为了给其留足空间，bootsect.S从0x90000开始，这样从0x10000到0x90000刚好512K内存，足够后面拷贝系统模块。<br>
+4、<code>setup.S</code>会为系统<code>设置好必要的硬件参数</code>，然后将0x10000处开始的系统模块代码重新拷贝至0x0内存处，接着设置好临时gdt和idt表、<code>打开保护模式</code>，最后跳往0x0处开始执行<code>32位</code>系统模块头部代码（即<code>head.s</code>）。<br>
+5、这里又要问，为什么一开始不直接拷贝到0地址处，而是先拷贝到0x10000后再拷贝到0x0，这是因为在setup.S中设置系统所需的必要的硬件参数需要调用BIOS中断获取，而BIOS中断向量表就存放在0地址处，因此这时候还不能直接拷贝系统模块至0地址，只有等参数初始化完成后才能拷贝到0地址处。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[16位x86汇编：int $0x10 显示中断]]></title>
         <id>https://blog.sxhome.club/post/16-wei-x86-hui-bian-int-dollar0x10/</id>
@@ -47,6 +64,23 @@ print:
 	movw $0xc,%bx  # 0x00页面 0x0c属性(红色)
 	int $0x10
 	pop %bp  # 恢复bp
+	ret
+# 打印十六进制数，参数存在 ax 中
+print_hex:
+	mov $4,%cx
+	mov %ax,%dx
+print_digit:
+	rol $4,%dx
+	mov $0xe,%ah
+	mov %dl,%al
+	and $0xf,%al
+	add $0x30,%al
+	cmp $0x39,%al
+	jbe good_digit
+	add $0x41-0x30-0xa,%al
+good_digit:
+	int $0x10
+	loop print_digit
 	ret
 </code></pre>
 ]]></content>

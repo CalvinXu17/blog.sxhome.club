@@ -8,15 +8,13 @@
 
 
 
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1601975683554">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/favicon.ico?v=1602341264526">
 
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CalvinXu17/blog.sxhome.club/styles/main.css">
-
-
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
@@ -96,7 +94,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1601975683554" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1602341264526" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
@@ -150,6 +148,23 @@ print:
 	movw $0xc,%bx  # 0x00页面 0x0c属性(红色)
 	int $0x10
 	pop %bp  # 恢复bp
+	ret
+# 打印十六进制数，参数存在 ax 中
+print_hex:
+	mov $4,%cx
+	mov %ax,%dx
+print_digit:
+	rol $4,%dx
+	mov $0xe,%ah
+	mov %dl,%al
+	and $0xf,%al
+	add $0x30,%al
+	cmp $0x39,%al
+	jbe good_digit
+	add $0x41-0x30-0xa,%al
+good_digit:
+	int $0x10
+	loop print_digit
 	ret
 </code></pre>
 
@@ -259,7 +274,6 @@ print:
 <script>
   hljs.initHighlightingOnLoad()
 </script>
-
     </div>
 </div>
 </body>
