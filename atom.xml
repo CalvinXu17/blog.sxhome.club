@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-10-11T00:41:36.286Z</updated>
+    <updated>2020-10-11T00:42:04.878Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
@@ -16,7 +16,7 @@
         </link>
         <updated>2020-10-10T13:59:52.000Z</updated>
         <content type="html"><![CDATA[<p><img src="https://blog.sxhome.club/post-images/1602376828572.jpeg" alt="" loading="lazy"><br>
-如上图所示，一般除了<code>0xA00000</code>到<code>0xFFFFF</code>(640K到1M共384K)和<code>0xFFFE0000</code>到<code>0xFFFFFFF</code>(4G最后的64K)以外的内存都可用作系统内存。<code>[0x0, 0xA0000)</code>的<code>640K</code>内存用于存放内核代码和数据，<code>640K到1M即[0xA0000, 0x100000)</code>保留用作图中的作用。由于Linux除了16位实模式以外不使用BIOS功能，也不使用BIOS中断向量表，因此存放在0x0到0x500的BIOS数据会被Linux系统模块覆盖。<br>
+如上图所示，一般除了<code>0xA0000</code>到<code>0xFFFFF</code>(640K到1M共384K)和<code>0xFFFE0000</code>到<code>0xFFFFFFF</code>(4G最后的64K)以外的内存都可用作系统内存。<code>[0x0, 0xA0000)</code>的<code>640K</code>内存用于存放内核代码和数据，<code>640K到1M即[0xA0000, 0x100000)</code>保留用作图中的作用。由于Linux除了16位实模式以外不使用BIOS功能，也不使用BIOS中断向量表，因此存放在0x0到0x500的BIOS数据会被Linux系统模块覆盖。<br>
 <img src="https://blog.sxhome.club/post-images/1602376521161.jpeg" alt="" loading="lazy"><br>
 如上图所示为Linux的引导扇区代码执行流程：<br>
 1、首先CPU在上电后会将<code>0号扇区</code>的512字节读到内存<code>0x7C00</code>开始的内存中，然后跳转到<code>0x7C00</code>执行引导代码（即<code>bootsect.S</code>）<br>
