@@ -2,13 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.sxhome.club</id>
     <title>林·楠Blog</title>
-    <updated>2020-10-11T00:42:15.483Z</updated>
+    <updated>2020-10-12T15:32:52.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.sxhome.club"/>
     <link rel="self" href="https://blog.sxhome.club/atom.xml"/>
     <logo>https://blog.sxhome.club/images/avatar.png</logo>
     <icon>https://blog.sxhome.club/favicon.ico</icon>
     <rights>All rights reserved 2020, 林·楠Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[2020.10.12 23:00 离考研越来越近了]]></title>
+        <id>https://blog.sxhome.club/post/20201012-2300-chi-kao-yan-yue-lai-yue-jin-liao/</id>
+        <link href="https://blog.sxhome.club/post/20201012-2300-chi-kao-yan-yue-lai-yue-jin-liao/">
+        </link>
+        <updated>2020-10-12T15:00:17.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>    今天也是保研公布结果的一天，空间、朋友圈里无非就是各种秀自己保研的人，为了这一刻他们应该等了许久吧。放下羡慕与嫉妒不谈吧，当初也是自己选择的考研这条路，看着每天在一起上课跟自己差不多甚至一些地方并不如自己的人能够保上研，而那学校却还是自己曾经心心念念的上海大学，心里也是百般滋味说不出，毕竟自己选择考研最终只是报考了东华大学，也并没有抬高学校层次。
+    我比别人差在哪呢？保研这条路也不是很容易，但自己也不是够不到，只能怪自己没有对保研有充分的认识，自己想当然了。总结起来就是几条：自以为保研非常难并且保不到好学校、自以为保研只能保学硕、自以为自己离保研差了很远。看吧这是自己想当然的结果，最终吃亏的还是自己，回想大学里很多时候都是自己想当然，错过了一些奖学金等等，到如今自己才真正吸取到教训，“没有调查，没有发言权”，毛主席的名言绝非说说而已。
+    细算算，保研的人从现在起到明年九月份，近一年的时间，几乎没什么压力了，也不用找工作，说句不上进的话，就是等毕业。选择了考研，就是从去年这时开始一直到现在1年的时间都是在备考，还有不到3个月考试，而未来算上复试还有近6个月的时间才能最终确定自己能不能读研究生，不过这还是在初试通过的理想情况下，可我还没考呢。想想这一路也真的不容易啊，今年由于疫情也是特殊的一年，大家都不容易，想起暑期南京集训的时候，正赶上身体出了状况，当时想放弃的心都有了。看起来考研是要多吃不少苦，不过这也是因果效应吧，想成功总要历经磨砺的，保研人那都是在本科期间努力来的结果，至于我们这样不够努力的，最终也只有考研这条路可选，总得付出点什么的。
+    也算是考了一辈子的试了，确实，聪明的人早已为保研早做打算了，能不考试为什么要去应试呢？在这样的体制下还是有很多选择的，既然选择了考，那只能在这最后的时候咬牙坚持下去了。曾经以为考研是多么的“神圣”，以为还是高考呢，现如今才知：那只是留给不够勤奋、不够努力的人的一条后路罢了。</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[内存布局与启动流程]]></title>
         <id>https://blog.sxhome.club/post/nei-cun-bu-ju-yu-qi-dong-liu-cheng/</id>
